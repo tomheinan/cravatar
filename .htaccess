@@ -1,0 +1,4 @@
+# URI scheme: /username/size
+RewriteEngine On
+RewriteRule .* index.php
+
