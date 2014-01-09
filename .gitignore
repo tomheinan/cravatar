@@ -13,5 +13,6 @@ logs
 results
 build
 .grunt
+cache
 
 node_modules
