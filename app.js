@@ -5,8 +5,8 @@ var app = express();
 
 app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
   res.type('png');
-  var default = fs.readFile('./default.png');
-  res.end(default, 'binary');
+  var def = fs.readFileSync('./default.png');
+  res.end(def, 'binary');
 });
 
 mkdirp('./cache', function(err) {
