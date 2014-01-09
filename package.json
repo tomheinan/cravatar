@@ -1,0 +1,26 @@
+{
+  "name": "cravatar",
+  "version": "2.0.0",
+  "description": "Like Gravatar, but for Minecraft",
+  "dependencies": {
+    "connect": "2.12.0"  
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tomheinan/cravatar.git"
+  },
+  "keywords": [
+    "minecraft",
+    "gravatar"
+  ],
+  "author": "Tom Heinan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomheinan/cravatar/issues"
+  },
+  "homepage": "https://github.com/tomheinan/cravatar"
+}

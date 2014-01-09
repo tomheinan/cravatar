@@ -1,2 +1,17 @@
 .DS_Store
+lcov.info
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
 
+pids
+logs
+results
+build
+.grunt
+
+node_modules
