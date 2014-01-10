@@ -1,14 +1,19 @@
 var express = require('express');
+var request = require('request');
 var mkdirp = require('mkdirp');
 var fs = require('fs');
 var Canvas = require('canvas');
 var app = express();
 
+// instance-y vars
 var size = 256;
 var minSize = 8;
 var maxSize = 512;
 
 var skinURL = "http://s3.amazonaws.com/MinecraftSkins/";
+
+// app config
+app.use(express.logger());
 
 var renderFace = function(buffer, httpContext) {
   httpContext.res.type('png');
@@ -16,24 +21,24 @@ var renderFace = function(buffer, httpContext) {
 }
 
 var renderPOI = function(buffer, httpContext) {
-    fs.readFile('./poi.png', function(err, poiData) {
-      var poiImage = new Canvas.Image;
-      var faceImage = new Canvas.Image;
-      
-      poiImage.src = poiData;
-      faceImage.src = buffer;
+  fs.readFile('./poi.png', function(err, poiData) {
+    var poiImage = new Canvas.Image;
+    var faceImage = new Canvas.Image;
+    
+    poiImage.src = poiData;
+    faceImage.src = buffer;
 
-      var canvas = new Canvas(poiImage.width, poiImage.height);
-      var context = canvas.getContext('2d');
+    var canvas = new Canvas(poiImage.width, poiImage.height);
+    var context = canvas.getContext('2d');
 
-      context.drawImage(poiImage, 0, 0, poiImage.width, poiImage.height);
-      context.drawImage(faceImage, 8, 8, faceImage.width, faceImage.height);
-      
-      canvas.toBuffer(function(err, compositeBuffer) {
-        httpContext.res.type('png');
-        httpContext.res.end(compositeBuffer, 'binary');
-      });
+    context.drawImage(poiImage, 0, 0, poiImage.width, poiImage.height);
+    context.drawImage(faceImage, 8, 8, faceImage.width, faceImage.height);
+    
+    canvas.toBuffer(function(err, compositeBuffer) {
+      httpContext.res.type('png');
+      httpContext.res.end(compositeBuffer, 'binary');
     });
+  });
 }
 
 var drawFace = function(image, httpContext) {
@@ -71,8 +76,12 @@ var drawFace = function(image, httpContext) {
   });
 }
 
+var getPlayerTexture = function(playerName, httpContext) {
+  
+}
+
 app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
-  console.log(req.params[0])
+  //console.log(req.params[0])
 
   fs.readFile('./tomheinan.png', function(err, avatar) {
     image = new Canvas.Image;
