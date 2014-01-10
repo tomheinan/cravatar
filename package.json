@@ -4,7 +4,8 @@
   "description": "Like Gravatar, but for Minecraft",
   "dependencies": {
     "express": "3.x",
-    "mkdirp": "0.3.x"
+    "mkdirp": "0.3.x",
+    "gm": "1.14.x"
   },
   "main": "server.js",
   "scripts": {
