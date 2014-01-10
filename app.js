@@ -8,6 +8,8 @@ var size = 256;
 var minSize = 8;
 var maxSize = 512;
 
+var skinURL = "http://s3.amazonaws.com/MinecraftSkins/";
+
 var renderFace = function(buffer, httpContext) {
   httpContext.res.type('png');
   httpContext.res.end(buffer, 'binary');
@@ -50,7 +52,6 @@ var drawFace = function(image, httpContext) {
 
 app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
   console.log(req.params[0])
-  console.log(req.query.poi)
 
   fs.readFile('./tomheinan.png', function(err, avatar) {
     image = new Canvas.Image;
