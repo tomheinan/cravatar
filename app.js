@@ -16,7 +16,24 @@ var renderFace = function(buffer, httpContext) {
 }
 
 var renderPOI = function(buffer, httpContext) {
+    fs.readFile('./poi.png', function(err, poiData) {
+      var poiImage = new Canvas.Image;
+      var faceImage = new Canvas.Image;
+      
+      poiImage.src = poiData;
+      faceImage.src = buffer;
 
+      var canvas = new Canvas(poiImage.width, poiImage.height);
+      var context = canvas.getContext('2d');
+
+      context.drawImage(poiImage, 0, 0, poiImage.width, poiImage.height);
+      context.drawImage(faceImage, 8, 8, faceImage.width, faceImage.height);
+      
+      canvas.toBuffer(function(err, compositeBuffer) {
+        httpContext.res.type('png');
+        httpContext.res.end(compositeBuffer, 'binary');
+      });
+    });
 }
 
 var drawFace = function(image, httpContext) {
@@ -46,7 +63,11 @@ var drawFace = function(image, httpContext) {
     context.drawImage(image, 40, 8, 8, 8, 0, 0, faceSize, faceSize);
   }
   canvas.toBuffer(function(err, buffer) {
-    renderFace(buffer, httpContext);
+    if (httpContext.req.query.poi != undefined && httpContext.req.query.poi.match(/^(?:1|true)$/i)) {
+      renderPOI(buffer, httpContext);
+    } else {
+      renderFace(buffer, httpContext);
+    }
   });
 }
 
