@@ -21,7 +21,7 @@ var renderFace = function(buffer, httpContext) {
 }
 
 var renderPOI = function(buffer, httpContext) {
-  fs.readFile('./poi.png', function(err, poiData) {
+  fs.readFile('./assets/images/poi.png', function(err, poiData) {
     var poiImage = new Canvas.Image;
     var faceImage = new Canvas.Image;
     
@@ -83,7 +83,7 @@ var getPlayerTexture = function(playerName, httpContext) {
 app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
   //console.log(req.params[0])
 
-  fs.readFile('./tomheinan.png', function(err, avatar) {
+  fs.readFile('./assets/images/default.png', function(err, avatar) {
     image = new Canvas.Image;
     image.src = avatar;
 
