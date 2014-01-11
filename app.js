@@ -100,12 +100,16 @@ var render = function(httpContext) {
       var cacheName = httpContext.req.params[0] + "." + lastModified.getTime() + ".png";
       loadTexture(cacheName, httpContext);
     } else {
-      console.log("ruh roh");
+      fs.readFile('./assets/images/default.png', function(err, data) {
+        var texture = new Canvas.Image;
+        texture.src = data;
+        drawFace(texture, httpContext);
+      });
     }
   });
 }
 
-app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
+app.get(/^\/([A-Za-z0-9\_]+)$/, function(req, res) {
   render({req: req, res: res});
 });
 
