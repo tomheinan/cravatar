@@ -113,6 +113,12 @@ app.get(/^\/([A-Za-z0-9\_]+)$/, function(req, res) {
   render({req: req, res: res});
 });
 
+// legacy url structure support
+app.get(/^\/([A-Za-z0-9\_]+)\/(\d+)$/, function(req, res) {
+  req.query.size = req.params[1];
+  render({req: req, res: res});
+});
+
 mkdirp('./cache', function(err) {
   if (err) {
     console.log(err)
