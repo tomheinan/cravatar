@@ -76,19 +76,37 @@ var drawFace = function(image, httpContext) {
   });
 }
 
-var getPlayerTexture = function(playerName, httpContext) {
-  
+var loadTexture = function(cacheName, httpContext) {
+  fs.readFile('./cache/' + cacheName, function(err, data) {
+    if (err) {
+      // file does not exist, fetch it
+      var r = request(skinURL + httpContext.req.params[0] + ".png").pipe(fs.createWriteStream('./cache/' + cacheName));
+      r.on('close', function() {
+        loadTexture(cacheName, httpContext);
+      });
+    } else {
+      // file does exist, continue processing
+      var texture = new Canvas.Image;
+      texture.src = data;
+      drawFace(texture, httpContext);
+    }
+  });
+}
+
+var render = function(httpContext) {
+  request.head(skinURL + httpContext.req.params[0] + ".png", function(err, res, body) {
+    if (res.statusCode == 200) {
+      var lastModified = new Date(res.headers['last-modified']);
+      var cacheName = httpContext.req.params[0] + "." + lastModified.getTime() + ".png";
+      loadTexture(cacheName, httpContext);
+    } else {
+      console.log("ruh roh");
+    }
+  });
 }
 
 app.get(/^\/([A-Za-z0-9\_]+)/, function(req, res) {
-  //console.log(req.params[0])
-
-  fs.readFile('./assets/images/default.png', function(err, avatar) {
-    image = new Canvas.Image;
-    image.src = avatar;
-
-    drawFace(image, {req: req, res: res});
-  });
+  render({req: req, res: res});
 });
 
 mkdirp('./cache', function(err) {
