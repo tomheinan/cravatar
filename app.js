@@ -8,7 +8,7 @@ var app = express();
 // instance-y vars
 var size = 256;
 var minSize = 8;
-var maxSize = 512;
+var maxSize = 2048;
 
 var skinURL = "http://s3.amazonaws.com/MinecraftSkins/";
 

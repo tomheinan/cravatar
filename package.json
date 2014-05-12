@@ -8,7 +8,7 @@
     "mkdirp": "0.3.x",
     "canvas": "1.1.x"
   },
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
